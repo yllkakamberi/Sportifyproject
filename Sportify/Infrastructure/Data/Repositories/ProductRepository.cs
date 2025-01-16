@@ -56,7 +56,6 @@ namespace Infrastructure.Data.Repositories
                 .ToListAsync();
         }
 
-        // Add the method to search products by name
         public async Task<IEnumerable<Product>> GetProductsByNameAsync(string productName)
         {
             if (string.IsNullOrWhiteSpace(productName))
@@ -69,6 +68,22 @@ namespace Infrastructure.Data.Repositories
                 .Include(p => p.ProductBrand)
                 .Include(p => p.ProductType)
                 .Where(p => p.Name.ToLower().Contains(productName.ToLower()))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
+        {
+            if (minPrice > maxPrice)
+            {
+                return Enumerable.Empty<Product>();
+            }
+
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Where(p => p.Price >= minPrice && p.Price <= maxPrice)
+                .OrderBy(p => p.Price)  // Sorting in ascending order
                 .ToListAsync();
         }
     }

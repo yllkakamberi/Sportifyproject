@@ -21,14 +21,13 @@ namespace Sportify.Controllers
             _productRepository = productRepository;
         }
 
-        // GET: api/v1/products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             try
             {
                 var products = await _context.Set<Product>()
-                                              .AsNoTracking()  // Optimize for read-only
+                                              .AsNoTracking()
                                               .Include(p => p.ProductType)
                                               .Include(p => p.ProductBrand)
                                               .ToListAsync();
@@ -41,14 +40,13 @@ namespace Sportify.Controllers
             }
         }
 
-        // GET: api/v1/products/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProductById(int id)
         {
             try
             {
                 var product = await _context.Set<Product>()
-                                             .AsNoTracking()  // Optimize for read-only
+                                             .AsNoTracking()
                                              .Include(p => p.ProductType)
                                              .Include(p => p.ProductBrand)
                                              .FirstOrDefaultAsync(p => p.Id == id);
@@ -67,7 +65,6 @@ namespace Sportify.Controllers
             }
         }
 
-        // POST: api/v1/products
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product newProduct)
         {
@@ -79,7 +76,7 @@ namespace Sportify.Controllers
             try
             {
                 await _context.Set<Product>().AddAsync(newProduct);
-                await _context.SaveChangesAsync();  // Save changes asynchronously
+                await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Product {ProductId} created successfully.", newProduct.Id);
 
@@ -92,7 +89,6 @@ namespace Sportify.Controllers
             }
         }
 
-        // PUT: api/v1/products/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] Product updatedProduct)
         {
@@ -110,7 +106,6 @@ namespace Sportify.Controllers
                     return NotFound();
                 }
 
-                // Update the product properties
                 product.Name = updatedProduct.Name;
                 product.Description = updatedProduct.Description;
                 product.Price = updatedProduct.Price;
@@ -119,7 +114,7 @@ namespace Sportify.Controllers
                 product.ProductBrandId = updatedProduct.ProductBrandId;
 
                 _context.Set<Product>().Update(product);
-                await _context.SaveChangesAsync();  // Save changes asynchronously
+                await _context.SaveChangesAsync();
 
                 return NoContent();
             }
@@ -130,7 +125,6 @@ namespace Sportify.Controllers
             }
         }
 
-        // DELETE: api/v1/products/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -144,7 +138,7 @@ namespace Sportify.Controllers
                 }
 
                 _context.Set<Product>().Remove(product);
-                await _context.SaveChangesAsync();  // Save changes asynchronously
+                await _context.SaveChangesAsync();
 
                 return NoContent();
             }
@@ -155,14 +149,13 @@ namespace Sportify.Controllers
             }
         }
 
-        // GET: api/v1/products/bybrand
         [HttpGet("bybrand")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByBrand([FromQuery] int productBrandId)
         {
             try
             {
                 var products = await _context.Set<Product>()
-                                              .AsNoTracking()  // Optimize for read-only
+                                              .AsNoTracking()
                                               .Include(p => p.ProductType)
                                               .Include(p => p.ProductBrand)
                                               .Where(p => p.ProductBrandId == productBrandId)
@@ -182,14 +175,13 @@ namespace Sportify.Controllers
             }
         }
 
-        // GET: api/v1/products/bytype
         [HttpGet("bytype")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByType([FromQuery] int productTypeId)
         {
             try
             {
                 var products = await _context.Set<Product>()
-                                              .AsNoTracking()  // Optimize for read-only
+                                              .AsNoTracking()
                                               .Include(p => p.ProductType)
                                               .Include(p => p.ProductBrand)
                                               .Where(p => p.ProductTypeId == productTypeId)
@@ -209,7 +201,6 @@ namespace Sportify.Controllers
             }
         }
 
-        // GET: api/v1/products/byname
         [HttpGet("byname")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByName([FromQuery] string productName)
         {
@@ -227,6 +218,27 @@ namespace Sportify.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while searching for products with name containing '{productName}'.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("byprice")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByPriceRange([FromQuery] decimal minPrice, [FromQuery] decimal maxPrice)
+        {
+            try
+            {
+                var products = await _productRepository.GetProductsByPriceRangeAsync(minPrice, maxPrice);
+
+                if (products == null || !products.Any())
+                {
+                    return NotFound($"No products found within the price range {minPrice} to {maxPrice}.");
+                }
+
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while fetching products in the price range {minPrice} to {maxPrice}.");
                 return StatusCode(500, "Internal server error");
             }
         }
