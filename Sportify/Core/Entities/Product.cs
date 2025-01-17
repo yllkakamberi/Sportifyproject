@@ -11,6 +11,8 @@ public class Product : BaseEntity
     public int ProductBrandId { get; set; }
 
     // Navigation Properties
+    public int StockQuantity { get; set; }
+
     public ProductType? ProductType { get; set; }
     public ProductBrand? ProductBrand { get; set; }
 }

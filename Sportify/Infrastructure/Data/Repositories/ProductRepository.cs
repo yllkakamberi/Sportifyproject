@@ -86,5 +86,41 @@ namespace Infrastructure.Data.Repositories
                 .OrderBy(p => p.Price)  // Sorting in ascending order
                 .ToListAsync();
         }
+
+        // Task 2: Get Products with Stock Greater Than 10
+        public async Task<IEnumerable<Product>> GetProductsWithSufficientStockAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Where(p => p.StockQuantity > 10)
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .ToListAsync();  // ToListAsync() ensures it's async
+        }
+
+
+        // Task 3: Get Low Stock Products (Stock ≤ 10)
+        public async Task<IEnumerable<Product>> GetLowStockProductsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Where(p => p.StockQuantity <= 10 && p.StockQuantity > 0)
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .ToListAsync();  // ToListAsync() ensures it's async
+        }
+
+
+        // Task 4: Get Out-of-Stock Products (Stock == 0)
+        public async Task<IEnumerable<Product>> GetOutOfStockProductsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Where(p => p.StockQuantity == 0)
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .ToListAsync();  // ToListAsync() ensures it's async
+        }
+
+        }
     }
-}

@@ -242,5 +242,66 @@ namespace Sportify.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpGet("sufficient-stock")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsWithSufficientStock()
+        {
+            try
+            {
+                var products = await _productRepository.GetProductsWithSufficientStockAsync();
+
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No products with sufficient stock found.");
+                }
+
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching products with sufficient stock.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("low-stock")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetLowStockProducts()
+        {
+            try
+            {
+                var products = await _productRepository.GetLowStockProductsAsync();
+
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No low stock products found.");
+                }
+
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching low stock products.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpGet("out-of-stock")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetOutOfStockProducts()
+        {
+            try
+            {
+                var products = await _productRepository.GetOutOfStockProductsAsync();
+
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No out-of-stock products found.");
+                }
+
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching out-of-stock products.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
