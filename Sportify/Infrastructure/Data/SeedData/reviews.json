@@ -1,0 +1,170 @@
+[
+  {
+    "Id": -1,
+    "ProductId": -1,
+    "Rating": 5,
+    "Comment": "Great shoes for indoor play, very comfortable!",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -2,
+    "ProductId": -1,
+    "Rating": 4,
+    "Comment": "Good quality but could use more cushioning.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -3,
+    "ProductId": -1,
+    "Rating": 5,
+    "Comment": "Very durable, great grip, a must-buy for badminton players.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -4,
+    "ProductId": -2,
+    "Rating": 4,
+    "Comment": "Comfortable but a bit tight at first. Needs breaking in.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -5,
+    "ProductId": -2,
+    "Rating": 3,
+    "Comment": "The shoes are good, but I prefer a softer sole.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -6,
+    "ProductId": -2,
+    "Rating": 3,
+    "Comment": "Good design, but the size runs small. Make sure to order one size up.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -7,
+    "ProductId": -3,
+    "Rating": 5,
+    "Comment": "Best badminton shoes I've ever used. A bit pricey but worth it.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -8,
+    "ProductId": -3,
+    "Rating": 4,
+    "Comment": "Quality could be improved, but overall decent shoes for the price.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -9,
+    "ProductId": -3,
+    "Rating": 3,
+    "Comment": "Good shoes, but the arch support could be better.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -10,
+    "ProductId": -4,
+    "Rating": 5,
+    "Comment": "These shoes are extremely comfortable and fit well.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -11,
+    "ProductId": -4,
+    "Rating": 3,
+    "Comment": "Good performance, but I expected more durability.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -12,
+    "ProductId": -4,
+    "Rating": 2,
+    "Comment": "Light and comfortable, but the sole wore out quickly.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -13,
+    "ProductId": -5,
+    "Rating": 5,
+    "Comment": "Amazing grip and comfort, would buy again.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -14,
+    "ProductId": -5,
+    "Rating": 3,
+    "Comment": "The shoes are fine, but the price is a bit high for the quality.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -15,
+    "ProductId": -5,
+    "Rating": 5,
+    "Comment": "Perfect for cricket. The grip is fantastic.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -16,
+    "ProductId": -6,
+    "Rating": 5,
+    "Comment": "Best football ball I have ever used, excellent for long passes.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -17,
+    "ProductId": -6,
+    "Rating": 4,
+    "Comment": "Great quality, but a bit expensive for a football.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -18,
+    "ProductId": -6,
+    "Rating": 3,
+    "Comment": "The ball feels great but gets scuffed easily.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -19,
+    "ProductId": -7,
+    "Rating": 5,
+    "Comment": "Great racquet for the price, feels solid and well-built.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -20,
+    "ProductId": -7,
+    "Rating": 3,
+    "Comment": "Not a fan of the grip, but the performance is good.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -21,
+    "ProductId": -7,
+    "Rating": 5,
+    "Comment": "Excellent racquet for aggressive play, very powerful.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -22,
+    "ProductId": -8,
+    "Rating": 4,
+    "Comment": "Great value for money. Feels solid on every swing.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -23,
+    "ProductId": -8,
+    "Rating": 3,
+    "Comment": "Not as durable as expected, but overall a good choice.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  },
+  {
+    "Id": -24,
+    "ProductId": -8,
+    "Rating": 4,
+    "Comment": "Solid racquet, would recommend to intermediate players.",
+    "CreatedAt": "2025-01-23T00:00:00Z"
+  }
+]

@@ -16,6 +16,28 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
+        // Implement the missing method
+        public async Task<Product> GetProductByIdAsync(int id)
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews) // Include reviews for average rating calculations
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        // Other methods remain unchanged
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews) // Include reviews for average rating calculations
+                .ToListAsync();
+        }
+
         public async Task<IList<ProductBrand>> GetProductBrandsAsync()
         {
             return await _context.ProductBrands.AsNoTracking().ToListAsync();
@@ -87,7 +109,6 @@ namespace Infrastructure.Data.Repositories
                 .ToListAsync();
         }
 
-        // Task 2: Get Products with Stock Greater Than 10
         public async Task<IEnumerable<Product>> GetProductsWithSufficientStockAsync()
         {
             return await _context.Products
@@ -95,11 +116,9 @@ namespace Infrastructure.Data.Repositories
                 .Where(p => p.StockQuantity > 10)
                 .Include(p => p.ProductBrand)
                 .Include(p => p.ProductType)
-                .ToListAsync();  // ToListAsync() ensures it's async
+                .ToListAsync();
         }
 
-
-        // Task 3: Get Low Stock Products (Stock ≤ 10)
         public async Task<IEnumerable<Product>> GetLowStockProductsAsync()
         {
             return await _context.Products
@@ -107,11 +126,9 @@ namespace Infrastructure.Data.Repositories
                 .Where(p => p.StockQuantity <= 10 && p.StockQuantity > 0)
                 .Include(p => p.ProductBrand)
                 .Include(p => p.ProductType)
-                .ToListAsync();  // ToListAsync() ensures it's async
+                .ToListAsync();
         }
 
-
-        // Task 4: Get Out-of-Stock Products (Stock == 0)
         public async Task<IEnumerable<Product>> GetOutOfStockProductsAsync()
         {
             return await _context.Products
@@ -119,8 +136,65 @@ namespace Infrastructure.Data.Repositories
                 .Where(p => p.StockQuantity == 0)
                 .Include(p => p.ProductBrand)
                 .Include(p => p.ProductType)
-                .ToListAsync();  // ToListAsync() ensures it's async
+                .ToListAsync();
         }
 
+        public async Task<IEnumerable<Product>> GetHighlyRatedProductsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews)  // Include reviews for average calculation
+                .Where(p => p.Reviews.Any() && p.Reviews.Average(r => r.Score) >= 4.5)  // Filter for high ratings
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetLowestRatedProductsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews)  // Include reviews for average calculation
+                .Where(p => p.Reviews.Any() && p.Reviews.Average(r => r.Score) >= 1 && p.Reviews.Average(r => r.Score) <= 2)  // Filter for low ratings
+                .ToListAsync();
+        }
+
+        // Task 1: Filter Products Based on Review Count
+        public async Task<IList<Product>> GetProductsByMinimumReviewCountAsync(int minReviews)
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews)
+                .Where(p => p.Reviews.Count >= minReviews)
+                .ToListAsync();
+        }
+
+        // Task 2: Return Products with Highest Average Rating but Minimum Number of Reviews
+        public async Task<IList<Product>> GetTopRatedProductsByReviewCountAsync(int minReviews)
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews)
+                .Where(p => p.Reviews.Count >= minReviews && p.Reviews.Average(r => r.Score) > 4)
+                .ToListAsync();
+        }
+
+        // Task 3: Get Products with No Reviews
+        public async Task<IList<Product>> GetProductsWithNoReviewsAsync()
+        {
+            return await _context.Products
+                .AsNoTracking()
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .Include(p => p.Reviews)
+                .Where(p => !p.Reviews.Any())
+                .ToListAsync();
         }
     }
+}

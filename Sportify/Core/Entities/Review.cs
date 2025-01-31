@@ -1,15 +1,13 @@
-﻿using System;
-
-namespace Core.Entities
+﻿namespace Core.Entities
 {
-    public class Review : BaseEntity
+    public class Review
     {
-        public string ReviewText { get; set; }
-
-        public int Score { get; set; }
-
+        public int Id { get; set; }
+        public string ReviewerName { get; set; }
+        public string Comment { get; set; }
+        public int Score { get; set; } // This is the correct property for rating
+        public DateTime ReviewDate { get; set; }
         public int ProductId { get; set; }
-
         public Product Product { get; set; }
     }
 }
